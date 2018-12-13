@@ -3,7 +3,7 @@
  * 
  * Author:  Karim Hraibi
  * Version: 1.0.0
- * Date:    13.12.2018
+ * Date:    19.06.2018
  */
 #define VERSION_MAJOR 1  // major version
 #define VERSION_MINOR 0  // minor version
