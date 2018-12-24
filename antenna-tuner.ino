@@ -348,8 +348,8 @@ void buttonRead () {
 
 
 /*
- * initialize the servo
- * restore the last servo position, taking the direction of rotation into account
+ * Initialize the servo
+ * Restore the last servo position, taking the direction of rotation into account
  */
 void servoInit () {
   
@@ -359,11 +359,14 @@ void servoInit () {
 
   G.Srv.attach (PPM_PIN, G.minPosition, G.maxPosition); 
 
+  // overshoot the target position
   if (Nvm.direction < 0)  G.coarsePosition = Nvm.coarsePosition + SERVO_SB_STARTUP + SERVO_FINE_RANGE;
   else                    G.coarsePosition = Nvm.coarsePosition - SERVO_SB_STARTUP;
 
+  // move the servo to overshoot position
   servoControl (false, false);
 
+  // reset to target position - servo will move there once servoControl () is called
   G.coarsePosition = Nvm.coarsePosition;
 }
 
