@@ -1,4 +1,4 @@
-/*
+/* 
  * Abstraction layer for the ATmega328p ADC 
  * Non-blocking read the ADC output as an alternative
  * to the blocking analogRead() method.
