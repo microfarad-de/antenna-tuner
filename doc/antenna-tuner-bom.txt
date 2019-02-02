@@ -1,0 +1,25 @@
+
+Qty Value            Device                          Package                  Parts              Description                          
+2                    WE-MLS-3WAY_74273001            WE-3WAY_74273001         L1, L2             Multiline EMI Suppression Ferrite    
+4   1.2V             BATTERY-AA                      BATTERY-AA               BT1, BT2, BT3, BT4 Battery - Single Cell                
+1   1000uF/25V       CPOL-EUE5-10.5                  E5-10,5                  C1                 POLARIZED CAPACITOR, European symbol 
+1   10k              POTENTIOMETER-PTH-9MM-1/20W-20% POT-PTH-ALPS             VR1                Potentiometer (Pot)                  
+1   10uF/25V Tantal  CPOL-EUE2.5-6                   E2,5-6                   C3                 POLARIZED CAPACITOR, European symbol 
+3   196              R-EU_0207/7                     0207/7                   R1, R2, R3         RESISTOR, European symbol            
+1   1N4004           1N4004                          DO41-10                  D1                 DIODE                                
+2   1N4148           1N4148DO35-7                    DO35-7                   D4, D5             DIODE                                
+2   1N5819           1N5819-B                        DO41-7.6                 D2, D3             1.0A SCHOTTKY BARRIER RECTIFIER      
+1   220uF/25V        CPOL-EUE2.5-6                   E2,5-6                   C2                 POLARIZED CAPACITOR, European symbol 
+1   2K2              R-EU_0207/7                     0207/7                   R6                 RESISTOR, European symbol            
+1   39K              R-EU_0207/7                     0207/7                   R5                 RESISTOR, European symbol            
+1   56K              R-EU_0207/7                     0207/7                   R4                 RESISTOR, European symbol            
+1   Arduino Pro Mini ARDUINO_PRO_MINI_TS             ARDUINO_PRO_MINI_TS      U1                 Arduino Pro Mini                     
+1   BC337            BC337                           TO92                     Q2                 NPN Transistor                       
+1   Decrease         MOMENTARY-SWITCH-SPST-PTH-6.0MM TACTILE_SWITCH_PTH_6.0MM S2                 Momentary Switch (Pushbutton) - SPST 
+1   IRF5305          IRF5305                         TO220V                   Q1                 IRF5305                              
+1   Increase         MOMENTARY-SWITCH-SPST-PTH-6.0MM TACTILE_SWITCH_PTH_6.0MM S3                 Momentary Switch (Pushbutton) - SPST 
+1   LED              LED5MM                          LED_5MM                  D6                 LED (Generic)                        
+1   Power            MOMENTARY-SWITCH-SPST-PTH-6.0MM TACTILE_SWITCH_PTH_6.0MM S1                 Momentary Switch (Pushbutton) - SPST 
+1   Power Jack       POWER_JACKPTH_BREAD             POWER_JACK_PTH_BREAD     J1                 Power Jack Connector                 
+2   RJ45             RJ45-8                          RJ45-8                   J2, J3             RJ45 Jack - 8 pin                    
+1   SERVO            SERVO                           1X03                     M1                 Servo Motor                          
