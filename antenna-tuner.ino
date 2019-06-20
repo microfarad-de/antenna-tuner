@@ -35,8 +35,8 @@
 #include <avr/power.h>
 #include <avr/wdt.h>
 #include <Servo.h>
-#include "helper.h"
-#include "adc.h"
+#include "Helper.h"
+#include "Adc.h"
 
 
 //#define SERIAL_DEBUG              // activate debug printing over RS232
@@ -146,7 +146,7 @@ void setup() {
   if (Nvm.direction != -1 && Nvm.direction != 1) Nvm.direction = 1;
 
   // initialize various objects
-  ADConv.initialize ();
+  Adc.initialize ();
   G.Led.initialize (LED_PIN);
   G.FirFilter.initialize (G.firMemory, FIR_FILTER_TAPS);
   servoInit ();
@@ -353,7 +353,7 @@ void buttonRead () {
   else G.ButtonDec.release ();
 
   // check if ADC finished detecting the value
-  adcVal = ADConv.readVal ();
+  adcVal = Adc.readVal ();
 
   // ADC finished
   if (adcVal >= 0) {
@@ -363,7 +363,7 @@ void buttonRead () {
   }
   
   // start a new ADC conversion (will be ignored if already started)
-  ADConv.start (POT_APIN);
+  Adc.start (POT_APIN);
   
 }
 
