@@ -27,11 +27,11 @@
  */
 
 
-#include "adc.h"
+#include "Adc.h"
 
 
 
-AdcClass ADConv;
+AdcClass Adc;
 
 
 void AdcClass::initialize (AdcPrescaler_t prescaler, AdcReference_t reference) {
