@@ -16,3 +16,6 @@
 [submodule "src/MathMf"]
 	path = src/MathMf
 	url = ssh://git@github.com/microfarad-de/MathMf
+[submodule "arduino-mk"]
+	path = arduino-mk
+	url = ssh://git@github.com/sudar/Arduino-Makefile

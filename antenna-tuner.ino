@@ -115,6 +115,17 @@ struct {
 
 
 /*
+ * Function prototypes
+ */
+void buttonRead (void);
+void servoInit (void);
+int16_t servoControl (bool, bool);
+void powerSave (void);
+
+
+
+
+/*
  * Arduino setup routine
  */
 void setup() {
