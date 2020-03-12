@@ -1,6 +1,3 @@
-[submodule "src/Math"]
-	path = src/Math
-	url = ssh://git@github.com/microfarad-de/Math.git
 [submodule "src/Adc"]
 	path = src/Adc
 	url = ssh://git@github.com/microfarad-de/Adc.git
@@ -17,3 +14,6 @@
 	url = ssh://git@github.com/microfarad-de/Led.git
 	branch = antenna-tuner
 
+[submodule "src/MathMf"]
+	path = src/MathMf
+	url = ssh://git@github.com/microfarad-de/MathMf
