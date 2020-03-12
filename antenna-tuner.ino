@@ -35,8 +35,11 @@
 #include <avr/power.h>
 #include <avr/wdt.h>
 #include <Servo.h>
-#include "Helper.h"
-#include "Adc.h"
+#include "src/Adc/Adc.h"
+#include "src/Nvm/Nvm.h"
+#include "src/Led/Led.h"
+#include "src/Button/Button.h"
+#include "src/Math/Math.h"
 
 
 //#define SERIAL_DEBUG              // activate debug printing over RS232
