@@ -9,7 +9,7 @@
 #include <EEPROM.h>
 
 
-#define BUTTON_LONG_PRESS_TIMEOUT (1000)
+#define BUTTON_LONG_PRESS_TIMEOUT (500)
 
 
 /*#######################################################################################*/

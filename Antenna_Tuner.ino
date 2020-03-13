@@ -4,6 +4,8 @@
  * Karim Hraibi - 2018
  */
 
+#include <avr/sleep.h>
+#include <avr/power.h>
 #include <avr/wdt.h>
 #include <Servo.h>
 #include "Helper.h"
@@ -36,7 +38,7 @@
 #define SERVO_FINE_RANGE 100 // range for serve fine adjustment (us)
 #define SERVO_SETBACK 60     // setback the servo by this amount when changing direction (us)
 #define SERVO_SB_DELAY 60    // delay duration after servo setback (ms)
-#define SERVO_DIR_COMP 4     // compensaton value when changing direction (us)
+#define SERVO_DIR_COMP 3     // compensaton value when changing direction (us)
 
 #define BUTTON_DELAY 5       // delay for repeating actions when holding a button (ms)
 
@@ -155,6 +157,9 @@ void loop() {
       break;
     
   }
+
+  // call the power-save routine
+  powerSave ();
   
 }
 
@@ -257,5 +262,28 @@ void servoControl () {
 }
 
 
+/*
+ * Power-save routine, enables CPU sleep mode
+ */
+void powerSave (void) {
+
+  set_sleep_mode (SLEEP_MODE_IDLE); // configure lowest sleep mode that keeps clk_IO for Timer 1
+
+  // enter sleep, wakeup will be triggered by the 
+  // next Timer 1 interrupt
+  sleep_enable (); 
+  sleep_cpu ();
+  sleep_disable ();
+  
+}
+
+
+
+/*
+ * ISR for servicing Timer 2 interrupts
+ */
+void timer2ISR (void) {
+
+}
 
 
