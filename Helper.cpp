@@ -18,9 +18,8 @@ void LedClass::initialize (uint8_t ledPin) {
   this->ledPin = ledPin;
   pinMode (ledPin, OUTPUT);
   digitalWrite (ledPin, LOW);
-  active = false;
+  powerOn = false;
   blinking = false;
-  index = 0;
   initialized = true;
 }
 
@@ -31,37 +30,39 @@ void LedClass::loopHandler (void) {
 
   ts = millis ();
   
-  if (ts - blinkTs > pattern[index]) {
-    digitalWrite (ledPin, !digitalRead (ledPin));
+  if ( (blinkOn && ts - blinkTs > tOn) || (!blinkOn && ts - blinkTs > tOff) ) {
+    blinkOn = !blinkOn;
+    digitalWrite (ledPin, blinkOn);
     blinkTs = ts;
-    index++;
-    if (pattern[index] < 0) {
-      index = 0;
+    count--;
+    if (count <= 0) {
       blinking = false;
-      digitalWrite (ledPin, active);
+      digitalWrite (ledPin, powerOn);
     }
   }
 }
 
 void LedClass::turnOn (void) {
   if (!initialized) return;
-  active = true;
-  digitalWrite (ledPin, HIGH);
+  powerOn = true;
+  digitalWrite (ledPin, powerOn);
 }
 
 void LedClass::turnOff (void) {
   if (!initialized) return;
-  active = false;
-  digitalWrite (ledPin, LOW);
+  powerOn = false;
+  digitalWrite (ledPin, powerOn);
 }
 
-void LedClass::blink (void) {
+void LedClass::blink (int32_t count, uint32_t tOn, uint32_t tOff) {
   if (!initialized || blinking) return;
-  digitalWrite (ledPin, LOW);
-  blinking = true;
-  pattern = pattern1;
-  //blinkTs = millis () - 5000;
-  index = 0;
+  this->blinking = true;
+  this->count = 2 * count;
+  this->tOn = tOn;
+  this->tOff = tOff;
+  this->blinkOn = !powerOn;
+  digitalWrite (ledPin, blinkOn);  
+  blinkTs = millis ();
 }
 
 /*#######################################################################################*/

@@ -20,19 +20,18 @@ class LedClass {
     void loopHandler (void);
     void turnOn (void);
     void turnOff (void);
-    void blink (void);
+    void blink (int32_t count, uint32_t tOn, uint32_t tOff);
 
     bool blinking = false;
-    bool active = false;
+    bool powerOn = false;
     
   private:
     bool initialized = false;
     uint8_t ledPin;
-    uint8_t index = 0;
     uint32_t blinkTs = 0;
-    int32_t *pattern = pattern1;
-    //int32_t pattern1[9] = { 100, 50, 100, 50, 100, 50, 100, 50, -1 };  
-    int32_t pattern1[5] = { 100, 50, 100, 50, -1};
+    int32_t count;
+    uint32_t tOn, tOff;
+    bool blinkOn;
 };
 
 
@@ -98,7 +97,7 @@ void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize);
 
 
 /*
- * Return the sign of a value
+ * return the sign of a value
  */
 int8_t sgn (int val);
 
