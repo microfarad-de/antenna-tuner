@@ -11,7 +11,7 @@
 
 
 #define SERIAL_DEBUG              // activate debug printing over RS232
-#define SERIAL_BAUD 115200          // serial baud rate
+#define SERIAL_BAUD 115200        // serial baud rate
 
 // use these macros for printing to serial port
 #ifdef SERIAL_DEBUG  
@@ -33,7 +33,7 @@
 
 #define SERVO_MIN 540        // minimum servo PPM pulse width (us)
 #define SERVO_MAX 2236       // maximum servo PPM pulse width (us)
-#define SERVO_FINE_RANGE 150 // range for serve fine adjustment (us)
+#define SERVO_FINE_RANGE 100 // range for servo fine adjustment (us)
 #define SERVO_SETBACK 60     // setback the servo by this amount when changing direction (us)
 #define SERVO_SB_DELAY 60    // delay duration after servo setback (ms)
 #define SERVO_DIR_COMP 4     // compensaton value when changing direction (us)
@@ -64,7 +64,7 @@ struct {
  * Non-volatile memory contents (EEPROM)
  */
 struct {
-  int16_t coarsePosition;        // coarse serovo position (us)
+  int16_t coarsePosition;        // coarse servo position (us)
 } Nvm;
 
 
@@ -73,7 +73,7 @@ struct {
  */
 void setup() {
   MCUSR = 0;      // clear MCU status register
-  wdt_disable (); // and disable watchdog
+  wdt_disable (); // and disable the watchdog timer
 
 #ifdef SERIAL_DEBUG  
   // initialize serial port
@@ -115,7 +115,7 @@ void setup() {
  * Arduino main loop
  */
 void loop() {
-  static enum { STARTUP, RUNNING, SHUTDOWN, AUTO_SHUTDOWN } state = STARTUP;
+  static enum { STARTUP, RUNNING, SHUTDOWN } state = STARTUP;
   int32_t ts = millis ();
 
   buttonRead ();
@@ -129,7 +129,7 @@ void loop() {
       // power button - long press
       if (G.ButtonPwr.longPress ()) {
         G.Led.turnOn ();                 // turn on the led indicator
-        digitalWrite (MOSFET_PIN, HIGH); // turn on the MOSFET
+        digitalWrite (MOSFET_PIN, HIGH); // turn on the power supply MOSFET
         G.autoPowerOffTs = ts;           // reset the auto power-off timer
         state = RUNNING;
       }
@@ -141,20 +141,17 @@ void loop() {
       if (G.ButtonPwr.longPress ()) state = SHUTDOWN;
 
       // auto power-off timeout
-      if (ts - G.autoPowerOffTs > AUTO_POWER_OFF_DELAY) state = AUTO_SHUTDOWN;
+      if (ts - G.autoPowerOffTs > AUTO_POWER_OFF_DELAY) state = SHUTDOWN;
 
       servoControl ();
       
       break;
 
     case SHUTDOWN:
-      //G.Srv.writeMicroseconds (SERVO_MIN); // move the servo to storage-safe position
-    case AUTO_SHUTDOWN:
-      G.Led.turnOff ();                    // turn off the led indicator
+      G.Led.turnOff ();                                 // turn off the led indicator
       eepromWrite (0x0, (uint8_t *)&Nvm, sizeof (Nvm)); // write-back NVM settings
-      //delay (1000);
-      digitalWrite (MOSFET_PIN, LOW);     // turn off the MOSFET
-      while (1) {};
+      digitalWrite (MOSFET_PIN, LOW);                   // turn off the power supply MOSFET
+      while (1) {};                                     // loop until the MCU shuts down
       break;
     
   }
@@ -183,7 +180,7 @@ void buttonRead () {
   else G.ButtonDec.release ();
 
 
-  // start ADC for the current button (will be ignored if already started)
+  // start ADC conversion (will be ignored if already started)
   ADConv.start (POT_APIN);
 
   // check if ADC finished detecting the value
@@ -227,7 +224,7 @@ void servoControl () {
   if (abs (delta) > 0) {
 
     G.Led.blink ();
-    G.autoPowerOffTs = ts; // reset the auto power-of timer                     
+    G.autoPowerOffTs = ts; // reset the auto power-off timer                     
 
     // handle changed rotation direction
     if (sgn (delta) == -sgn (lastDelta)) {

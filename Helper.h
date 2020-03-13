@@ -98,7 +98,7 @@ void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize);
 
 
 /*
- * return the sign of a value
+ * Return the sign of a value
  */
 int8_t sgn (int val);
 
