@@ -25,18 +25,18 @@
 
 #define LED_PIN 13          // output LED pin number (digital pin)
 #define PPM_PIN 9           // output pin number for the PPM output (digital pin with PWM support, pin 9 or 10 on ATmega328)
-#define MOSFET_PIN 7        // output pin for controlling the power-on MOSFTE
+#define MOSFET_PIN 7        // output pin for controlling the power-on MOSFET
 #define BUTTON_PWR_PIN 10   // input pin for "power" button
 #define BUTTON_INC_PIN 12   // input pin for "increase" button
 #define BUTTON_DEC_PIN 11   // input pin for "decrease" button
 #define POT_APIN A0         // analog pin connected to the potentiometer
 
-#define SERVO_MIN 750        // minimum servo PPM pulse width (us)
-#define SERVO_MAX 2250       // maximum servo PPM pulse width (us)
-#define SERVO_FINE_RANGE 100 // range for serve fine adjustment (us)
+#define SERVO_MIN 540        // minimum servo PPM pulse width (us)
+#define SERVO_MAX 2236       // maximum servo PPM pulse width (us)
+#define SERVO_FINE_RANGE 150 // range for serve fine adjustment (us)
 #define SERVO_SETBACK 60     // setback the servo by this amount when changing direction (us)
 #define SERVO_SB_DELAY 60    // delay duration after servo setback (ms)
-#define SERVO_DIR_COMP 5     // compensaton value when changing direction (us)
+#define SERVO_DIR_COMP 6     // compensaton value when changing direction (us)
 
 #define BUTTON_DELAY 5       // delay for repeating actions when holding a button (ms)
 
@@ -86,7 +86,7 @@ void setup() {
  
   pinMode (PPM_PIN, OUTPUT); 
   pinMode (MOSFET_PIN, OUTPUT);
-  digitalWrite (MOSFET_PIN, HIGH);
+  digitalWrite (MOSFET_PIN, LOW);
   pinMode (BUTTON_PWR_PIN, INPUT_PULLUP);
   pinMode (BUTTON_INC_PIN, INPUT_PULLUP);
   pinMode (BUTTON_DEC_PIN, INPUT_PULLUP);
@@ -128,9 +128,9 @@ void loop() {
     case STARTUP:
       // power button - long press
       if (G.ButtonPwr.longPress ()) {
-        G.Led.turnOn ();                // turn on the led indicator
-        digitalWrite (MOSFET_PIN, LOW); // turn on the MOSFET
-        G.autoPowerOffTs = ts;            // reset the auto power-off timer
+        G.Led.turnOn ();                 // turn on the led indicator
+        digitalWrite (MOSFET_PIN, HIGH); // turn on the MOSFET
+        G.autoPowerOffTs = ts;           // reset the auto power-off timer
         state = RUNNING;
       }
       break;
@@ -153,14 +153,11 @@ void loop() {
       G.Led.turnOff ();                    // turn off the led indicator
       eepromWrite (0x0, (uint8_t *)&Nvm, sizeof (Nvm)); // write-back NVM settings
       delay (1000);
-      digitalWrite (MOSFET_PIN, HIGH);     // turn off the MOSFET
+      digitalWrite (MOSFET_PIN, LOW);     // turn off the MOSFET
       while (1) {};
       break;
     
   }
-
-  
-  
   
 }
 
@@ -209,7 +206,6 @@ void servoControl () {
   static uint32_t buttonTs = 0;
   static int16_t lastServoVal = 0;
   static int16_t lastDelta = 0;
-  static IirFilterClass IirFilter;
   int16_t servoVal;
   int16_t delta;
   uint32_t ts = millis ();
