@@ -61,7 +61,7 @@ void LedClass::toggle (void) {
 }
 
 void LedClass::blink (int32_t count, uint32_t tOn, uint32_t tOff) {
-  if (!initialized || blinking) return;
+  if (!initialized || blinking || count <= 0) return;
   this->blinking = true;
   this->count = 2 * count;
   this->tOn = tOn;
@@ -201,6 +201,8 @@ void eepromRead (uint16_t addr, uint8_t *buf, uint16_t bufSize) {
   }
 }
 
+
+/*#######################################################################################*/
 
 
 int8_t sgn (int val) {
