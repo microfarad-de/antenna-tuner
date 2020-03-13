@@ -54,6 +54,12 @@ void LedClass::turnOff (void) {
   digitalWrite (ledPin, powerOn);
 }
 
+void LedClass::toggle (void) {
+  if (!initialized) return;
+  powerOn = !powerOn;
+  digitalWrite (ledPin, powerOn);
+}
+
 void LedClass::blink (int32_t count, uint32_t tOn, uint32_t tOff) {
   if (!initialized || blinking) return;
   this->blinking = true;
@@ -63,6 +69,11 @@ void LedClass::blink (int32_t count, uint32_t tOn, uint32_t tOff) {
   this->blinkOn = !powerOn;
   digitalWrite (ledPin, blinkOn);  
   blinkTs = millis ();
+}
+
+void LedClass::blinkBlocking (int32_t count, uint32_t tOn, uint32_t tOff) {
+  blink (count, tOn, tOff);
+  while (blinking) loopHandler ();
 }
 
 /*#######################################################################################*/

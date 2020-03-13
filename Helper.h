@@ -20,7 +20,9 @@ class LedClass {
     void loopHandler (void);
     void turnOn (void);
     void turnOff (void);
+    void toggle (void);
     void blink (int32_t count, uint32_t tOn, uint32_t tOff);
+    void blinkBlocking (int32_t count, uint32_t tOn, uint32_t tOff);
 
     bool blinking = false;
     bool powerOn = false;
