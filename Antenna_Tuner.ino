@@ -36,7 +36,7 @@
 #define SERVO_FINE_RANGE 150 // range for serve fine adjustment (us)
 #define SERVO_SETBACK 60     // setback the servo by this amount when changing direction (us)
 #define SERVO_SB_DELAY 60    // delay duration after servo setback (ms)
-#define SERVO_DIR_COMP 6     // compensaton value when changing direction (us)
+#define SERVO_DIR_COMP 4     // compensaton value when changing direction (us)
 
 #define BUTTON_DELAY 5       // delay for repeating actions when holding a button (ms)
 
@@ -148,11 +148,11 @@ void loop() {
       break;
 
     case SHUTDOWN:
-      G.Srv.writeMicroseconds (SERVO_MIN); // move the servo to storage-safe position
+      //G.Srv.writeMicroseconds (SERVO_MIN); // move the servo to storage-safe position
     case AUTO_SHUTDOWN:
       G.Led.turnOff ();                    // turn off the led indicator
       eepromWrite (0x0, (uint8_t *)&Nvm, sizeof (Nvm)); // write-back NVM settings
-      delay (1000);
+      //delay (1000);
       digitalWrite (MOSFET_PIN, LOW);     // turn off the MOSFET
       while (1) {};
       break;
